@@ -1,0 +1,100 @@
+package com.example.ybanhsflashcardapp;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.media.Image;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
+
+public class MainActivity extends AppCompatActivity {
+
+    TextView flashcard_question;
+    TextView flashcard_answer;
+    TextView wronganswer1;
+    TextView wronganswer2;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        flashcard_question = findViewById(R.id.flashcard_question);
+        flashcard_answer = findViewById(R.id.flashcard_answer);
+//        wronganswer1 = findViewById(R.id.answer1);
+//        wronganswer2 = findViewById(R.id.answer2);
+
+
+        // Tap the question to see the flashcard answer
+        flashcard_question.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Show the answer and hide the question
+                flashcard_question.setVisibility(View.INVISIBLE);
+                flashcard_answer.setVisibility(View.VISIBLE);
+//                findViewById(R.id.parent).setBackgroundColor(getResources().getColor(R.color.beige));
+            }
+        });
+
+        // Tap to toggle the view
+        flashcard_answer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Show the question again and hide the answer
+                flashcard_question.setVisibility(View.VISIBLE);
+                flashcard_answer.setVisibility(View.INVISIBLE);
+//                findViewById(R.id.parent).setBackgroundColor(getResources().getColor(R.color.darkred));
+            }
+        });
+
+        findViewById(R.id.add_icon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
+//                MainActivity.this.startActivity(intent);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        findViewById(R.id.edit_icon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddCardActivity.class);
+                intent.putExtra("flashcard_question", flashcard_question.getText().toString());
+                intent.putExtra("flashcard_answer",flashcard_answer.getText().toString());
+                startActivityForResult(intent,1);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 1) {
+            if (data != null) {
+                String question = data.getExtras().getString("QUESTION_KEY");
+                String answer = data.getExtras().getString("ANSWER_KEY");
+//                String wronganswer1= data.getExtras().getString("WRONG_ANSWER1");
+//                String wronganswer2= data.getExtras().getString("WRONG_ANSWER1");
+
+                flashcard_question.setText(question);
+                flashcard_answer.setText(answer);
+
+            }
+        }
+        Snackbar.make(findViewById(R.id.flashcard_question),
+                "The message to display",
+                Snackbar.LENGTH_SHORT)
+                .show();
+    }
+
+}
