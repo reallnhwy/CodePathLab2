@@ -6,7 +6,7 @@ A flashcard app
 
 ### App Walk-though
 
-<img src="https://imgur.com/6F89iGO.gif" width=200><br>
+<img src="https://imgur.com/Ay33WGd.gif" width=200><br>
 
 ## Required
 - [x] User can click on a ‘+’ button that takes the user to new ‘Add Card Screen’
