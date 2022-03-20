@@ -1,7 +1,8 @@
 ## Lab 2
 
 ### App Description
-`TODO://` Add app description
+
+A flashcard app
 
 ### App Walk-though
 
